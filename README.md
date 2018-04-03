@@ -1,7 +1,7 @@
 ncmb-ruby-client
 ================
 
-A simple Ruby client for the nifty cloud mobile backend REST API
+A simple Ruby client for the nifty cloud mobile backend REST API. This is developer preview.
 
 Basic Usage
 -----------
@@ -47,4 +47,8 @@ else
 end
 ```
 
-[ニフティクラウド mobile backend](http://mb.cloud.nifty.com/)
+## License
+
+MIT.
+
+[ニフクラ mobile backend](http://mb.cloud.nifty.com/)
