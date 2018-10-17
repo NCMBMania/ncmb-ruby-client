@@ -9,6 +9,8 @@ end
 
 module NCMB
   DOMAIN = 'mbaas.api.nifcloud.com'
+  SCRIPT_DOMAIN = 'script.mbaas.api.nifcloud.com'
+  SCRIPT_API_VERSION = '2015-09-01'
   API_VERSION = '2013-09-01'
   @application_key = nil
   @client_key = nil
@@ -18,28 +20,30 @@ module NCMB
   
   class Client
     include NCMB
-    attr_accessor :application_key, :client_key, :domain, :api_version
+    attr_accessor :application_key, :client_key, :domain, :api_version, :script_api_version
     def initialize(params = {})
       @domain          = NCMB::DOMAIN
       @api_version     = NCMB::API_VERSION
+      @script_domain   = NCMB::SCRIPT_DOMAIN
+      @script_api_version = NCMB::SCRIPT_API_VERSION
       @application_key = params[:application_key]
       @client_key      = params[:client_key]
     end
     
-    def get(path, params = {})
-      request :get, path, params
+    def get(path, params = {}, headers = {})
+      request :get, path, params, headers
     end
     
-    def post(path, params = {})
-      request :post, path, params
+    def post(path, params = {}, headers = {})
+      request :post, path, params, headers
     end
 
-    def put(path, params = {})
-      request :put, path, params
+    def put(path, params = {}, headers = {})
+      request :put, path, params, headers
     end
     
-    def delete(path, params = {})
-      request :delete, path, params
+    def delete(path, params = {}, headers = {})
+      request :delete, path, params, headers
     end
     
     def array2hash(ary)
@@ -90,7 +94,6 @@ module NCMB
           results[k.to_s] = v.to_s
         end
       end
-      puts results
       results
     end
     
@@ -114,7 +117,7 @@ module NCMB
       end
       signature_base = []
       signature_base << method.upcase
-      signature_base << @domain
+      signature_base << get_domain(path)
       signature_base << path
       signature_base << params.collect{|k,v| "#{k}=#{v}"}.join("&")
       Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), @client_key, signature_base.join("\n"))).strip()
@@ -135,10 +138,19 @@ module NCMB
       post_body.join("\r\n")
     end
     
-    def request(method, path, queries = {})
+    def get_domain(path)
+      domain = @domain
+      if path.start_with?("/#{@script_api_version}/script\/")
+        domain = @script_domain
+      end
+      domain
+    end
+    
+    def request(method, path, queries = {}, addHeaders = {})
       now = Time.now.utc.iso8601
       signature = generate_signature(method, path, now, queries)
-      http = Net::HTTP.new(@domain, 443)
+      domain = get_domain(path)
+      http = Net::HTTP.new(domain, 443)
       http.use_ssl=true
       headers = {
         "X-NCMB-Application-Key" => @application_key,
@@ -146,6 +158,9 @@ module NCMB
         "X-NCMB-Timestamp" => now,
         "Content-Type" => 'application/json'
       }
+      (addHeaders || {}).each do |name, value|
+        headers[name] = value
+      end
       if NCMB.CurrentUser
         headers['X-NCMB-Apps-Session-Token'] = NCMB.CurrentUser.sessionToken
       end
