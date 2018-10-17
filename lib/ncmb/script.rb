@@ -28,14 +28,14 @@ module NCMB
     def set(params)
       params = Hash[ params.map{ |k, v| [k.to_sym, v] } ]
       self
-        .headers(params[:headers])
+        .headers(params[:header])
         .body(params[:body])
         .query(params[:query])
       self
     end
     
-    def headers(params)
-      @params[:headers] = params
+    def header(params)
+      @params[:header] = params
       self
     end
     
@@ -50,7 +50,7 @@ module NCMB
     end
     
     def execute(method)
-      @@client.send(method, "/#{@@client.script_api_version}/script/#{@name}", (@params[:query] || {}).merge(@params[:body] || {}), @params[:headers])
+      @@client.send(method, "/#{@@client.script_api_version}/script/#{@name}", (@params[:query] || {}).merge(@params[:body] || {}), @params[:header])
     end
   end
 end
