@@ -13,7 +13,7 @@ NCMB.initialize(
   client_key: yaml['client_key']
 )
 
-f = NCMB::NFile.new('http://mb.cloud.nifty.com/assets/images/logo.png')
+f = NCMB::NFile.new('https://mbaas.nifcloud.com/assets/images/logo.png')
 f.acl.public('read', true)
 f.acl.public('write', true)
 f.fileName = 'test.png'
@@ -25,7 +25,7 @@ puts 'Updated'
 f.delete()
 puts 'Deleted'
 
-f = NCMB::NFile.new('http://mb.cloud.nifty.com/assets/images/logo.png')
+f = NCMB::NFile.new('https://mbaas.nifcloud.com/assets/images/logo.png')
 f.acl.public('read', true)
 f.acl.public('write', true)
 f.fileName = 'test.png'

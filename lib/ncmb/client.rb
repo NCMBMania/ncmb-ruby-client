@@ -64,7 +64,7 @@ module NCMB
       results = {}
       queries.each do |k, v|
         v = array2hash(v) if v.is_a? Array
-        value = URI.encode(v.is_a?(Hash) ? v.to_json : v.to_s).gsub("[", "%5B").gsub(":", "%3A").gsub("]", "%5D")
+        value = URI.encode_www_form_component(v.is_a?(Hash) ? v.to_json : v.to_s).gsub("[", "%5B").gsub(":", "%3A").gsub("]", "%5D")
         results[k.to_s] = value
       end
       results
@@ -158,7 +158,7 @@ module NCMB
         "X-NCMB-Timestamp" => now,
         "Content-Type" => 'application/json'
       }
-      (addHeaders || {}).each do |name, value|
+      Array(addHeaders || {}).each do |name, value|
         headers[name] = value
       end
       if NCMB.CurrentUser
