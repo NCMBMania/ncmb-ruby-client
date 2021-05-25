@@ -162,7 +162,7 @@ module NCMB
         headers[name] = value
       end
       if NCMB.CurrentUser
-        headers['X-NCMB-Apps-Session-Token'] = NCMB.CurrentUser.sessionToken
+        headers['X-NCMB-Apps-Session-Token'] = NCMB.CurrentUser[:sessionToken]
       end
       # queries = hash2query(queries)
       json = nil
