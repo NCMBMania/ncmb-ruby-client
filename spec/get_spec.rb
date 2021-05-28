@@ -17,7 +17,7 @@ describe NCMB do
   
   it 'Get #1' do
     @items = @todoClass.order('-createDate').skip(0).all
-    @items.length.should == 10
+    expect(@items.length).to eql(10)
   end
   
 end

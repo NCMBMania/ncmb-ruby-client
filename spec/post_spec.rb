@@ -15,7 +15,7 @@ describe NCMB do
     queries = {todo: text}
     todo_class = NCMB::DataStore.new 'POST_TODO'
     todo = todo_class.new(queries).save
-    todo.todo.should == text
+    expect(todo.todo).to eql(text)
   end
   
   it 'Post with location #1' do
