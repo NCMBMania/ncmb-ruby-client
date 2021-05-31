@@ -14,16 +14,19 @@ NCMB.initialize(
   client_key: yaml['client_key']
 )
 @todo = NCMB::DataStore.new 'TestClass'
-1000.times do |i|
-  @todo.post(message: "Hello! #{i}")
+20.times do |i|
+  item = @todo.new
+  item.set('message', "Hello! #{i}")
+  item.save
 end
-@todos = @todo.limit(20).count(1).skip(0)
+
+@todos = @todo.limit(10).skip(0)
 
 csv_string = CSV.generate do |csv|
-  csv << @todos.first.columns
+  csv << @todos.first.fields.keys
   @todos.each do |todo|
     params = []
-    todo.columns.each do |name|
+    todo.fields.keys.each do |name|
       params << todo.call(name)
     end
     csv << params

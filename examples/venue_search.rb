@@ -7,11 +7,11 @@ require 'rubygems'
 require 'ncmb'
 require 'yaml'
 yaml = YAML.load_file(File.join(File.dirname(__FILE__), '..', 'setting.yml'))
-@ncmb = NCMB.init(application_key: yaml['application_key'], 
+NCMB.initialize(application_key: yaml['application_key'], 
                   client_key: yaml['client_key']
                   )
 json = JSON.parse(open(File.join(File.dirname(__FILE__), 'venues.json'), 'r').read)
-venues_class = @ncmb.data_store 'Venues'
+venues_class = NCMB::DataStore.new 'Venues'
 json['response']['venues'].each do |venue|
   params = {
     name: venue['name'],
