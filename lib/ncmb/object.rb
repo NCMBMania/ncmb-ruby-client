@@ -45,7 +45,7 @@ module NCMB
     end
     
     def deletable?
-      if self.acl['*'.to_sym][:write] == true
+      if self.acl.fields[:*][:write] == true
         return true
       end
       return false unless NCMB.CurrentUser
