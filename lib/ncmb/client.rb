@@ -181,7 +181,7 @@ module NCMB
           end
         when :post
           req = Net::HTTP::Post.new(path)
-          if queries[:file].is_a?(File) || queries[:file].is_a?(StringIO)
+          if path.include? "/2013-09-01/files"
             boundary = SecureRandom.uuid
             req.body = make_boundary(boundary, queries)
             headers["Content-Type"] = "multipart/form-data; boundary=#{boundary}"
