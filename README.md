@@ -51,4 +51,4 @@ end
 
 MIT.
 
-[ニフクラ mobile backend](http://mb.cloud.nifty.com/)
+[ニフクラ mobile backend](https://mbaas.nifcloud.com/)
