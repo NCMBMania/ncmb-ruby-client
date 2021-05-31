@@ -14,7 +14,7 @@ module NCMB
     end
     
     def save
-      @fields[:file] = open(self.file)
+      @fields[:file] = ::OpenURI.open_uri(self.file)
       super
     end
     alias :update :save
