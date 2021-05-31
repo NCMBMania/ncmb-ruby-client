@@ -17,3 +17,4 @@ test/version_tmp
 tmp
 setting.yml
 .DS_Store
+vendor/
