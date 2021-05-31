@@ -25,6 +25,10 @@ module NCMB
       end
       params.to_json
     end
+
+    def fields
+      @fields
+    end
     
     def public(read_or_write, bol = true)
       @fields['*'.to_sym][read_or_write.to_sym] = bol

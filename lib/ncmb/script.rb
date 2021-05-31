@@ -28,7 +28,7 @@ module NCMB
     def set(params)
       params = Hash[ params.map{ |k, v| [k.to_sym, v] } ]
       self
-        .headers(params[:header])
+        .header(params[:header])
         .body(params[:body])
         .query(params[:query])
       self

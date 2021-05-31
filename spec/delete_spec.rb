@@ -14,12 +14,11 @@ describe NCMB do
   end
   
   it 'Delete #1' do
-    @todo.delete.should == true
+    expect(@todo.delete).to eql(true)
   end
 
   it 'Delete again' do
-    @todo.delete.should == true
-    @todo.delete.should == false
-    @todo.error[:code].should == 'E404001'
+    expect(@todo.delete).to eql(true)
+    expect { @todo.delete }.to raise_error(NCMB::APIError, "No data available.")
   end
 end

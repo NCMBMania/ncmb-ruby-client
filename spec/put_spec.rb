@@ -19,6 +19,6 @@ describe NCMB do
       "/2013-09-01/classes/TODO/#{@object_id}",
       todo: 'Test task updated'
     )
-    res[:updateDate].should_not be_nil
+    expect(res[:updateDate]).not_to be_nil
   end
 end
