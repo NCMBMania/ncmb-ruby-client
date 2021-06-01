@@ -47,6 +47,23 @@ else
 end
 ```
 
+## Unit test
+
+```
+rake spec
+```
+
+## Run all examples
+
+```
+rake examples
+```
+
+## Environment to confirm
+
+* Ruby v2.7.3 - bundle v2.1.4
+* Ruby v3.0.1 - bundle v2.2.15
+
 ## License
 
 MIT.

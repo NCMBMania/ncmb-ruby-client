@@ -10,6 +10,6 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = ["--color", "--format documentation"]
 end
 
-task :default do
-  FileList['examples/d*.rb'].each { |file| ruby file }
+task :examples do
+  FileList['examples/*.rb'].each { |file| ruby file }
 end
