@@ -49,8 +49,8 @@ module NCMB
         return true
       end
       return false unless NCMB.CurrentUser
-      return false unless self.acl[NCMB.CurrentUser.objectId.to_sym]
-      return false unless self.acl[NCMB.CurrentUser.objectId.to_sym][:write]
+      return false unless self.acl.fields[NCMB.CurrentUser.objectId.to_sym]
+      return false unless self.acl.fields[NCMB.CurrentUser.objectId.to_sym][:write]
       true
     end
     

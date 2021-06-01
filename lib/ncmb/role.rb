@@ -12,7 +12,7 @@ module NCMB
           roleName: name
         }
       end
-      @fields[:acl] = NCMB::Acl.new(@fields[:acl])
+      @fields[:acl] = NCMB::Acl.new
     end
     
     def self.find_or_create(name)
