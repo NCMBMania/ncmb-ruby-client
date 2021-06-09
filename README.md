@@ -59,10 +59,62 @@ rake spec
 rake examples
 ```
 
+## Test script
+
+Before run `examples/script.rb`, you should upload the below script files to Script function on the Console screen.
+
+helloworld.js
+```javascript
+module.exports = function(req, res) {
+  res.send('{"msg":"Hello World!"}');
+}
+```
+
+helloworld2.js
+```javascript
+module.exports = function(req, res) {
+  if (req.query.name) {
+    res.send('{"msg":"Hello ' + req.query.name +'!"}');
+  } else {
+    res.send('{"msg":"Hello World!"}');
+  }
+}
+```
+
+email.js
+```javascript
+function saveData(req, res) {
+  // POSTのデータを取得
+  var email = req.body.email;
+  var message = req.body.body;
+  
+  var NCMB = require('ncmb');
+  var ncmb = new NCMB('YOUR-APPLICATION-KEY', 'YOUR-CLIENT-KEY');
+
+  // データを保存する
+  var Item = ncmb.DataStore('Item');
+  var item = new Item();
+  item.set("email", email)
+      .set("message", message)
+      .save()
+      .then(function(item){
+        // 成功
+        res.send('{"msg":"POST data successfully!"}');
+
+      })
+      .catch(function(err){
+        // 失敗
+        res.send('{"msg":"' + err + '"}');
+      });
+}
+
+module.exports = saveData;
+```
+
 ## Environment to confirm
 
-* Ruby v2.7.3 - bundle v2.1.4
-* Ruby v3.0.1 - bundle v2.2.15
+* Ruby v2.7.3 - Bundler version 2.1.4
+* Ruby v3.0.1 - Bundler version 2.2.15
 
 ## License
 
