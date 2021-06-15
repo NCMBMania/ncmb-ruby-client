@@ -12,7 +12,9 @@ NCMB.initialize(application_key: yaml['application_key'],
                   )
 json = JSON.parse(open(File.join(File.dirname(__FILE__), 'venues.json'), 'r').read)
 venues_class = NCMB::DataStore.new 'Venues'
+venues_class.delete_all
 json['response']['venues'].each do |venue|
+  item = venues_class.new
   params = {
     name: venue['name'],
     location: {
@@ -21,7 +23,10 @@ json['response']['venues'].each do |venue|
       'longitude' => venue['location']['lng']
     }
   }
-  puts venues_class.post(params).body
+  item.set('name', params[:name])
+  item.set('location', params[:location])
+  item.save
+  puts "#{item.objectId} saved."
 end
 params = {}
 params[:where] = {
@@ -34,6 +39,11 @@ params[:where] = {
     '$maxDistanceInKilometers' => 10
   }
 }
-#  
-puts venues_class.get params
-#puts venues_class.get queries
+venues_class = venues_class.where("location", params[:where]['location'])
+results = venues_class.get
+
+puts results.length
+
+results.each do |result|
+  puts result.objectId
+end

@@ -29,6 +29,7 @@ if @user.signUp
   puts 'User create successful.'
   @user.set('Hello', 'World')
   @user.update
+  puts 'User update successful.'
 else
   puts "User create failed. #{@user.error.message}"
 end

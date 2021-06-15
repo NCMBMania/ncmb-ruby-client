@@ -25,7 +25,7 @@ module NCMB
     end
     
     def put
-      params = @fields
+      params = @fields.clone
       session_key = params[:sessionToken]
       [:objectId, :createDate, :updateDate, :sessionToken, :password].each do |name|
         params.delete name
